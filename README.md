@@ -11,6 +11,7 @@ Taxonomic assignment of the predicted rRNA genes
 Example command
 
 #RNA prediction, produce rRNA.fasta and rRA.gff.txt file
+
 perl bin/rRNAFinder.pl  examples/test.fasta
 
 
