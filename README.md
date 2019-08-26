@@ -9,6 +9,7 @@ Predict rRNA genes (5s, 5.8s, 16s, 18s, 23s, 28s rRNA genes)
 Taxonomic assignment of the predicted rRNA genes
 
 Example command
+
 #RNA prediction, produce rRNA.fasta and rRA.gff.txt file
 perl bin/rRNAFinder.pl  examples/test.fasta
 
