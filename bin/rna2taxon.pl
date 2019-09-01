@@ -49,7 +49,8 @@ if(! -e "$blastn_output"){
 
 open(BLAST_OUT,$blastn_output ) or die "Could not open $blastn_output to read, $!\n";
 
-$/="\n# BLASTN 2.8.1+\n";
+#$/="\n# BLASTN 2.8.1+\n";
+$/="\n# BLASTN";
 my $count = 0;
 my %taxon_ass = ();
 
@@ -61,7 +62,7 @@ while(<BLAST_OUT>){
     my @hits = ();
     my $seq2taxon = "";
     foreach my $line (@lines){
-	next if $line =~ /^#/;
+	next if $line =~ /^#|^\s+\d\.\d\.\d\+$/;
 	push(@hits, $line);
     }
     if (@hits == 0){
@@ -290,7 +291,7 @@ sub setOptions {
 sub usage {
   print STDERR "Synopsis:\n  $EXE $VERSION - $DESC\n";
   print STDERR "Author:\n  $AUTHOR\n";
-  print STDERR "Usage:\n  $EXE [options] <contigs.fasta>\n";
+  print STDERR "Usage:\n  $EXE [options] <rRNA fasta sequence file>\n";
   foreach (@Options) {
     if (ref) {
       my $def = defined($_->{DEFAULT}) ? " (default '$_->{DEFAULT}')" : "";
