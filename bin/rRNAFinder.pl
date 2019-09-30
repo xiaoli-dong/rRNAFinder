@@ -12,7 +12,7 @@ my $t0 = Benchmark->new;
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 # global variables
 my $EXE = $FindBin::RealScript;
-my $VERSION = "0.1";
+my $VERSION = "1.2.0";
 my $DESC = "genome/metagenome ribosomal RNA prediction and taxon assignments";
 my $AUTHOR = 'Xiaoli Dong <xdong@ucalgary.ca>';
 my $URL = 'https://sourceforge.net/projects/rrnafinder/';
@@ -196,7 +196,7 @@ close(GFF);
 
 
 gff2fasta("$outdir/rRNA.gff", $fasta, \%rnatcats);
-rna2taxon(\%rnatcats);
+#rna2taxon(\%rnatcats);
 
 my $t1 = Benchmark->new;
 my $td = timediff($t1, $t0);
@@ -208,42 +208,7 @@ sub is_overlapping{
     return max($x1,$y1) <= min($x2,$y2)
 }
 
-sub rna2taxon{
-    my ($rnatcats) = @_;
-    
-    my %taxfiles = ();
-    foreach my $cat (sort keys %$rnatcats){
-	my $input = "$cat.ffn";
-	my $output = "$cat.tax.txt";
-	$taxfiles{$cat} = "$outdir/$output";
-	my $dbtype = "";
-	if($cat =~ m/(16S|18S)/){
-	    $dbtype = "ssu";
-	}
-	elsif($cat =~ m/(23S|28S|5S|5_8S)/ ){
-	    $dbtype = "lsu";
-	}
-	else{
-	    err("unknow rRNA type: $cat");
-	    #next;
-	}
-	my $cmd = "$^X $bin/rna2taxon.pl --cpus $threads --dbtype $dbtype --evalue $evalue --identities $identities --coverage $coverage $outdir/$input > $outdir/$output";
-	msg("Command: $cmd");
-	system($cmd) >> 8 and  die "Could not execute cmd=$cmd, $!\n";
-	
-    }
-    if(-e "$outdir/rRNA.tax.txt"){
-	unlink("$outdir/rRNA.tax.txt");
-    }
-    foreach (keys %taxfiles){
-	print STDERR "$_\n";
-	my $catcmd = "cat $taxfiles{$_} >> $outdir/rRNA.tax.txt";
-	
-	msg("####################Command: $catcmd");
-	system($catcmd) >> 8 and  die "Could not execute cmd=$catcmd, $!\n";
-    }
-    
-}
+
 sub gff2fasta{
     my ($gff, $fasta, $rnacats) = @_;
     
@@ -337,11 +302,8 @@ sub setOptions {
       {OPT=>"domain=s",VAR=>\$domain, DEFAULT=>'meta', DESC=>"Search rRNA for rRNA in domains: [arc|bac|euk|meta]"},
       
       'rRNA gene prediction options',
-      {OPT=>"length=s",  VAR=>\$len, DEFAULT=>180, DESC=>"length cut-off for 16/18/23/28S rRNA only"},
+      {OPT=>"length=s",  VAR=>\$len, DEFAULT=>180, DESC=>"length cut-off for 16/18/23/28S rRNA only"}
       
-      'rRNA gene taxon assignment options:',
-      {OPT=>"coverage=f",VAR=>\$coverage, DEFAULT=>80, DESC=>"The min percent of the query sequence ovelaping with the subject sequence"},
-      {OPT=>"identities=s",VAR=>\$identities, DEFAULT=>'70,80,85,90,95,97,99', DESC=>"the percent identity of a match must exceed the given value of percent identity to be assigned at the given rank:domain70, phylum 80, class 85, order 90, family 95, genus 97, species 99"}
       );
 
   (!@ARGV) && (usage());
