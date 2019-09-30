@@ -3,7 +3,5 @@
 */*/*~
 db/tmp
 db/blast/silva*
-examples/contigs.500.fasta
-examples/cyano.fna
-examples/test_output
+db/hmm/readme.txt
 examples/\.*

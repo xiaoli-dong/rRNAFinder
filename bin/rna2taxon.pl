@@ -8,17 +8,18 @@ use Time::Piece;
 use Benchmark;
 use Scalar::Util qw(openhandle);
 
-my (@Options,$dbtype, $evalue, $cpus, $identities, $coverage,$length);
-setOptions();
 my $EXE = $FindBin::RealScript;
 my $VERSION = "0.1";
-my $DESC = "ribosomal RNA classification: associate ribosomal RNA to SILVA taxonomy";
+my $DESC = "ribosomal RNA classification: classify fasta format ssu and lsu rRNA using SILVA taxonomy";
 my $AUTHOR = 'Xiaoli Dong <xdong@ucalgary.ca>';
 my $OPSYS = $^O;
-
 my $DBDIR = "$FindBin::RealBin/../db/blast";
 my $ssu_db = "silva_SSURef_Nr99.fasta";
 my $lsu_db = "silva_LSURef.fasta";
+
+my (@Options,$dbtype, $evalue, $cpus, $identities, $coverage,$length);
+setOptions();
+
 my $db = $dbtype eq "ssu" ? $ssu_db : $lsu_db;
 
 my %level_cutoff = ();
@@ -289,25 +290,25 @@ sub setOptions {
 
 #----------------------------------------------------------------------
 sub usage {
-  print STDERR "Synopsis:\n  $EXE $VERSION - $DESC\n";
-  print STDERR "Author:\n  $AUTHOR\n";
-  print STDERR "Usage:\n  $EXE [options] <rRNA fasta sequence file>\n";
-  foreach (@Options) {
-    if (ref) {
-      my $def = defined($_->{DEFAULT}) ? " (default '$_->{DEFAULT}')" : "";
-      $def = ($def ? ' (default OFF)' : '(default ON)') if $_->{OPT} =~ m/!$/;
-      my $opt = $_->{OPT};
-      $opt =~ s/!$//;
-      $opt =~ s/=s$/ [X]/;
-      $opt =~ s/=i$/ [N]/;
-      $opt =~ s/=f$/ [n.n]/;
-      printf STDERR "  --%-15s %s%s\n", $opt, $_->{DESC}, $def;
+    print STDERR "Synopsis:\n  $EXE $VERSION - $DESC\n";
+    print STDERR "Author:\n  $AUTHOR\n";
+    print STDERR "Usage:\n  $EXE [options] <rRNA fasta sequence file>\n";
+    foreach (@Options) {
+	if (ref) {
+	    my $def = defined($_->{DEFAULT}) ? " (default '$_->{DEFAULT}')" : "";
+	    $def = ($def ? ' (default OFF)' : '(default ON)') if $_->{OPT} =~ m/!$/;
+	    my $opt = $_->{OPT};
+	    $opt =~ s/!$//;
+	    $opt =~ s/=s$/ [X]/;
+	    $opt =~ s/=i$/ [N]/;
+	    $opt =~ s/=f$/ [n.n]/;
+	    printf STDERR "  --%-15s %s%s\n", $opt, $_->{DESC}, $def;
+	}
+	else {
+	    print STDERR "$_\n";
+	}
     }
-    else {
-      print STDERR "$_\n";
-    }
-  }
-  exit(1);
+    exit(1);
 }
 #----------------------------------------------------------------------
 
