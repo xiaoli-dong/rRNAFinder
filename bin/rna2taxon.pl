@@ -9,7 +9,7 @@ use Benchmark;
 use Scalar::Util qw(openhandle);
 
 my $EXE = $FindBin::RealScript;
-my $VERSION = "0.1";
+my $VERSION = "1.1.1";
 my $DESC = "ribosomal RNA classification: classify fasta format ssu and lsu rRNA using SILVA taxonomy";
 my $AUTHOR = 'Xiaoli Dong <xdong@ucalgary.ca>';
 my $OPSYS = $^O;

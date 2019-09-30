@@ -12,7 +12,7 @@ my $t0 = Benchmark->new;
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 # global variables
 my $EXE = $FindBin::RealScript;
-my $VERSION = "1.2.0";
+my $VERSION = "1.1.1";
 my $DESC = "genome/metagenome ribosomal RNA prediction and taxon assignments";
 my $AUTHOR = 'Xiaoli Dong <xdong@ucalgary.ca>';
 my $URL = 'https://sourceforge.net/projects/rrnafinder/';
