@@ -33,5 +33,5 @@ Classify the predicated rRNA genes (16S, 18S, 23S, 28S rRNA genes) with default 
 ```
 perl rna2taxon.pl --dbtype ssu 16SrRNA.ffn
 perl rna2taxon.pl --dbtype lsu 23SrRNA.ffn
-'''
+```
 
