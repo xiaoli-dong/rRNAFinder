@@ -6,9 +6,10 @@ rRNAFinder is a small perl software package, which can be used to automatically 
 The "rna2taxon.pl" program accepts the above generated fasta format rRNA gene sequences as an input to produce the taxonomic assignments for the input genes. The input rRNA gene sequences are searched against the downloaded and reformatted SILVA SSU and LSU databases using blastn.   
 
 # Third-party software
+The required software must be added to the system path.
+
 * [BLAST+ executables](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download): The Basic Local Alignment Search Tool (BLAST) finds regions of	local similarity between sequences.
 * [Hmmer](http://hmmer.org): HMMER is used for searching sequence databases for sequence homologs, and for making sequence alignments.
-The required software must be added to the system path.
 
 # Build blast search database
 The downloaded and reformatted newest version of the SILVA SSU and LSU databases are required by "rna2taxon.pl" program to do the taxonomic assignments for the input rRNA gene sequences. The following command can be used to download and generate the databases.
